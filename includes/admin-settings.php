@@ -41,7 +41,6 @@ function pages_bag_fee() {
 
 function displayBagFeeettings(){
     ?>
-    <h2>Taxa Saco</h2>
     <form action="options.php" method="post">
         <?php 
         settings_fields( 'bag_fee_plugin_options' );
@@ -53,7 +52,7 @@ function displayBagFeeettings(){
 
 function bag_fee_register_settings() {
     register_setting( 'bag_fee_plugin_options', 'bag_fee_plugin_options', 'bag_fee_plugin_options_validate' );
-    add_settings_section( 'bag_settings', 'Valor da taxa de saco', 'bag_fee_settings', 'bag_fee_plugin' );
+    add_settings_section( 'bag_settings', 'Taxa de Saco', 'bag_fee_settings', 'bag_fee_plugin' );
 }
 add_action( 'admin_init', 'bag_fee_register_settings' );
 
@@ -62,7 +61,7 @@ function bag_fee_settings() {
 
     // Get available tax classes
     $all_tax_rates = [];
-    
+
     // Retrieve all tax classes.
     $tax_classes = WC_Tax::get_tax_classes();
     if ( !in_array( '', $tax_classes ) ) { // Make sure "Standard rate" (empty class name) is present.
@@ -75,18 +74,29 @@ function bag_fee_settings() {
         $all_tax_rates = array_merge( $all_tax_rates, $taxes );
     }
 
-    
-
     echo '<table class="form-table"><tbody>';
-    echo '<tr><th>Titulo da taxa</th><td><input class="regular-text" id="bg_fee_name" name="bag_fee_plugin_options[name]" type="text" value="' . esc_attr( $options['name'] ) .'" /></td></tr>';
-    echo '<tr><th>Valor</th><td><input id="bag_fee_amount" name="bag_fee_plugin_options[amount]"  type="text" value="' . esc_attr( $options['amount'] ) .'" /> €</td></tr>';
-    echo '<tr><th>Acresce IVA</th>
+    echo '<tr><th>Ativar</th>
                 <td>';
                 $checked = "";
-                if($options['is_taxable']) {
-                    $checked = "checked";
+                if(isset($options['is_active'])){
+                    if($options['is_active']) {
+                        $checked = "checked";
+                    }
                 }
-    echo             '<input class="" id="bag_fee_is_taxable" name="bag_fee_plugin_options[is_taxable]"  type="checkbox" value="1" ' . $checked . ' onchange="valueChanged()" />
+    echo             '<input class="" id="bag_fee_is_active" name="bag_fee_plugin_options[is_active]"  type="checkbox" value="1" ' . $checked . ' />
+                </td>
+           </tr>';
+    echo '<tr><th>Titulo da taxa</th><td><input class="regular-text" id="bg_fee_name" name="bag_fee_plugin_options[name]" type="text" value="' . esc_attr( $options['name'] ) .'" /></td></tr>';
+    echo '<tr><th>Valor</th><td><input id="bag_fee_amount" name="bag_fee_plugin_options[amount]"  type="text" value="' . esc_attr( $options['amount'] ) .'" /> €</td></tr>';
+    echo '<tr><th>Acresce IVA?</th>
+                <td>';
+                $checked = "";
+                if(isset($options['is_taxable'])){
+                    if($options['is_taxable']) {
+                        $checked = "checked";
+                    }
+                }
+    echo             '<input class="" id="bag_fee_is_taxable" name="bag_fee_plugin_options[is_taxable]"  type="checkbox" value="1" ' . $checked . ' />
                 </td>
            </tr>';
     echo '<tr><th><label class="" for="bag_fee_tax_class">Classe de IVA do WooCommerce</label></th>
@@ -94,8 +104,10 @@ function bag_fee_settings() {
                     <select class="" name="bag_fee_plugin_options[tax_class]" id="bag_fee_tax_class">';
                     foreach ($all_tax_rates as $tax ){
                         $selected = "";
-                        if($tax->tax_rate_class == $options['tax_class']) {
-                            $selected = "selected";
+                        if(isset($options['tax_class'])){
+                            if($tax->tax_rate_class == $options['tax_class']) {
+                                $selected = "selected";
+                            }
                         }
                         echo '<option value="' . $tax->tax_rate_class . '" ' . $selected . '>' . $tax->tax_rate_name . '</option>';
                     }
