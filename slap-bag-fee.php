@@ -9,7 +9,7 @@
  * Description: SLAP - Taxa para saco
  * Author: SLAP
  * Author URI: https://slap.pt/
- * Version: 1.0.2
+ * Version: 1.0.3
  */
 
  require_once (dirname(__FILE__) . '/includes/admin-settings.php');
