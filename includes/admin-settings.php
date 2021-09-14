@@ -86,6 +86,17 @@ function bag_fee_settings() {
     echo             '<input class="" id="bag_fee_is_active" name="bag_fee_plugin_options[is_active]"  type="checkbox" value="1" ' . $checked . ' />
                 </td>
            </tr>';
+    echo '<tr><th>Cobrar 1 (um) saco por restaurante?</th>
+                <td>';
+                $checked = "";
+                if(isset($options['per_restaurant'])){
+                    if($options['per_restaurant']) {
+                        $checked = "checked";
+                    }
+                }
+    echo            '<input class="" id="bag_fee_per_restaurant" name="bag_fee_plugin_options[per_restaurant]"  type="checkbox" value="1" ' . $checked . ' />
+                </td>
+            </tr>';
     echo '<tr><th>Titulo da taxa</th><td><input class="regular-text" id="bg_fee_name" name="bag_fee_plugin_options[name]" type="text" value="' . esc_attr( $options['name'] ) .'" /></td></tr>';
     echo '<tr><th>Valor</th><td><input id="bag_fee_amount" name="bag_fee_plugin_options[amount]"  type="text" value="' . esc_attr( $options['amount'] ) .'" /> €</td></tr>';
     echo '<tr><th>Acresce IVA?</th>
