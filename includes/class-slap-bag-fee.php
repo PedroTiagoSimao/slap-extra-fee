@@ -1,17 +1,17 @@
 <?php
 
-class SLAP_Bag_Fee {
+class SLAP_Extra_Fee {
 
     public function run() {
 
-        add_action( 'woocommerce_cart_calculate_fees', 'add_bag_fee' );
+        add_action( 'woocommerce_cart_calculate_fees', 'add_extra_fee' );
 
-        function add_bag_fee(){
+        function add_extra_fee(){
             // Set vars to prevent PHP errors on WP AJAX notice
             $amount = 0;
 
             // Get admin settings values
-            $feeSettings = get_option('bag_fee_plugin_options');
+            $feeSettings = get_option('extra_fee_plugin_options');
             $is_active = isset($feeSettings['is_active'])
                             ? $feeSettings['is_active']
                             : null;
@@ -92,22 +92,22 @@ class SLAP_Bag_Fee {
 
                 // Charge per order
                 if($charge_per == 'per_order') {
-                    $bag = 1;
+                    $fee = 1;
                 }
 
                 // Charge per item
                 if($charge_per == 'per_item') {
-                    $bag = $woocommerce->cart->get_cart_contents_count();
+                    $fee = $woocommerce->cart->get_cart_contents_count();
                 }
 
                 // Charge per per_category
                 if($charge_per == 'per_category') {
-                    $bag = count($arrCategories);
+                    $fee = count($arrCategories);
                 }
 
                 // Charge per per_tag
                 if($charge_per == 'per_tag') {
-                    $bag = $tagCount;
+                    $fee = $tagCount;
                 }
 
                 if($is_taxable == 1) {
@@ -123,12 +123,9 @@ class SLAP_Bag_Fee {
                     $is_taxable = false;
                 }
 
-                echo '<br>charge per: ' . $charge_per .'<br>';
-                echo 'bags: ' . $bag;
-
                 // Set WC add_fee
                 if($amount > 0) {
-                    WC()->cart->add_fee( __($feeTitle .' x ' . $bag, 'woocommerce'), $amount*$bag, $is_taxable, $tax_class);
+                    WC()->cart->add_fee( __($feeTitle .' x ' . $fee, 'woocommerce'), $amount*$fee, $is_taxable, $tax_class);
                 }
             }
         }

@@ -15,5 +15,5 @@
  require_once (dirname(__FILE__) . '/includes/admin-settings.php');
  require_once (dirname(__FILE__) . '/includes/class-slap-bag-fee.php');
 
- $slap_bag_fee = new SLAP_Bag_Fee;
+ $slap_bag_fee = new SLAP_Extra_Fee;
  $slap_bag_fee->run();
