@@ -2,7 +2,7 @@
 /**
  * @link              https://slap.pt/
  * @since             1.0.1
- * @package           Bag_Fee
+ * @package           SLAP_Extra_Fee
  *
  * Plugin Name: SLAP - Extra Fee
  * Plugin URI: https://slap.pt/wp-plugins/slap-extra-fee
