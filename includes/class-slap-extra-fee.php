@@ -83,7 +83,7 @@ class SLAP_Extra_Fee {
                     $tags = wp_get_post_terms( $productid, 'product_tag' );
                     if ( ! empty( $tags ) && ! is_wp_error( $tags ) ){
                         foreach ( $tags as $tag ) {
-                            if($tag->name == 'taxa'){
+                            if($tag->name == 'extra-fee'){
                                 $tagCount++;
                             }
                         }

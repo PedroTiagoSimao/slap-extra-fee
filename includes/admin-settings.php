@@ -14,10 +14,10 @@ function add_extra_fee_menu() {
     }
     if(!$menuExist) {
         add_menu_page( 'Definições', 'SLAP', 'administrator', 'slap-settings', 'pages_extra_fee');
-        $extraFeeSubMenu = add_submenu_page('slap-settings', 'Definições Taxa Extra', 'Definições Taxa Extra', 'administrator', 'settings-extra-fee', 'displayExtraFeeSettings');
+        $extraFeeSubMenu = add_submenu_page('slap-settings', 'Extra Fee Settings', 'Extra Fee Settings', 'administrator', 'settings-extra-fee', 'displayExtraFeeSettings');
         add_action( 'load-' . $extraFeeSubMenu, 'load_admin_js' );
     } else {
-        $extraFeeSubMenu = add_submenu_page('slap-settings', 'Definições Taxa Extra', 'Definições Taxa Extra', 'administrator', 'settings-extra-fee', 'displayExtraFeeSettings');
+        $extraFeeSubMenu = add_submenu_page('slap-settings', 'Extra Fee Settings', 'Extra Fee Settings', 'administrator', 'settings-extra-fee', 'displayExtraFeeSettings');
         add_action( 'load-' . $extraFeeSubMenu, 'load_admin_js' );
     }
 }
@@ -75,7 +75,7 @@ function extra_fee_settings() {
     }
     
     echo '<table class="form-table"><tbody>';
-    echo '<tr><th>Ativar</th>
+    echo '<tr><th>Active?</th>
                 <td>';
                 $checked = "";
                 if(isset($options['is_active'])){
@@ -86,29 +86,29 @@ function extra_fee_settings() {
     echo             '<input class="" id="extra_fee_is_active" name="extra_fee_plugin_options[is_active]"  type="checkbox" value="1" ' . $checked . ' />
                 </td>
            </tr>';
-    echo '<tr><th>Cobrar por cada</th>
+    echo '<tr><th>Charger per</th>
                 <td>
                     <select class="charge" name="extra_fee_plugin_options[charge_per]" id="extra_fee_charge_per">';
                     $per_selected = "";
                     if(isset($options['charge_per'])){
                         $per_selected = $options['charge_per'];
                     }
-                    echo '<option value="per_order" ' . ($per_selected=='per_order' ? "selected" : "" ) .' >Encomenda</option>
-                        <option value="per_item" ' . ($per_selected=='per_item' ? "selected" : "" ) .' >Produto</option>
-                        <option value="per_category" ' . ($per_selected=='per_category' ? "selected" : "" ) .' >Categoria (pai)</option>
-                        <option value="per_tag" ' . ($per_selected=='per_tag' ? "selected" : "" ) .' >Etiqueta (taxa)</option>
+                    echo '<option value="per_order" ' . ($per_selected=='per_order' ? "selected" : "" ) .' >Order</option>
+                        <option value="per_item" ' . ($per_selected=='per_item' ? "selected" : "" ) .' >Product</option>
+                        <option value="per_category" ' . ($per_selected=='per_category' ? "selected" : "" ) .' >Category (parent)</option>
+                        <option value="per_tag" ' . ($per_selected=='per_tag' ? "selected" : "" ) .' >Tag (extra-fee)</option>
                     </select>
                         <ul>
-                            <li><strong>1)</strong> A opção "Encomenda" adiciona 1 taxa por cada encomenda.</li>
-                            <li><strong>2)</strong> A opção "Produto" adiciona 1 taxa por cada produto no carrinho.<br>A quantidade de cada produto também é considerada.</li>
-                            <li><strong>3)</strong> A opção "Categoria" funciona por categoria "pai".<br>Ou seja, só é tido em conta a categoria principal onde os produtos estão inseridos.</li>
-                            <li><strong>4)</strong> Para usar a opção "Etiqueta" deve adicionar a etiqueta <strong>taxa</strong> ao produto</li>
+                            <li><strong>1)</strong> The option "Order" charges 1 extra fee per order.</li>
+                            <li><strong>2)</strong> The option "Product" charges 1 extre fee per product in cart.<br>The quantity per product is also taken under account.</li>
+                            <li><strong>3)</strong> The option "Category" uses the parent category only.<br> The fee is added per parent category.</li>
+                            <li><strong>4)</strong> To use the Tag option, the tag <strong>"extra-fee"</strong> must be added to the product\'s tags</li>
                         </ul>
                 </td>
             </tr>';
-    echo '<tr><th>Titulo da taxa</th><td><input class="regular-text" id="bg_fee_name" name="extra_fee_plugin_options[name]" type="text" value="' . esc_attr( $options['name'] ) .'" /></td></tr>';
-    echo '<tr><th>Valor</th><td><input id="extra_fee_amount" name="extra_fee_plugin_options[amount]"  type="text" value="' . esc_attr( $options['amount'] ) .'" /> €</td></tr>';
-    echo '<tr><th>Acresce IVA?</th>
+    echo '<tr><th>Fee title</th><td><input class="regular-text" id="bg_fee_name" name="extra_fee_plugin_options[name]" type="text" value="' . esc_attr( $options['name'] ) .'" /></td></tr>';
+    echo '<tr><th>Amount</th><td><input id="extra_fee_amount" name="extra_fee_plugin_options[amount]"  type="text" value="' . esc_attr( $options['amount'] ) .'" /> €</td></tr>';
+    echo '<tr><th>Taxable?</th>
                 <td>';
                 $checked = "";
                 if(isset($options['is_taxable'])){
@@ -119,7 +119,7 @@ function extra_fee_settings() {
     echo             '<input class="" id="extra_fee_is_taxable" name="extra_fee_plugin_options[is_taxable]"  type="checkbox" value="1" ' . $checked . ' />
                 </td>
            </tr>';
-    echo '<tr><th><label class="" for="extra_fee_tax_class">Classe de IVA do WooCommerce</label></th>
+    echo '<tr><th><label class="" for="extra_fee_tax_class">WooCommerce tax classe</label></th>
                 <td>
                     <select class="" name="extra_fee_plugin_options[tax_class]" id="extra_fee_tax_class">';
                     foreach ($all_tax_rates as $tax ){
