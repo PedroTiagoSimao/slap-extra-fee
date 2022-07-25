@@ -1,6 +1,5 @@
 === SLAP - Extra Fee ===
 Contributors: pedrtosimao
-Donate link: https://example.com/
 Tags: fee
 Requires at least: 5.4
 Tested up to: 6.0.1
@@ -9,7 +8,7 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-oAllows you to create a fee that will charge the customer based on oder, products, categories or tags
+Allows you to create a fee that will charge the customer based on oder, products, categories or tags
 
 == Description ==
 
